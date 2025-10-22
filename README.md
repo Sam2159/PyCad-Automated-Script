@@ -19,8 +19,8 @@ python3 main.py
 
 # Development Progress:
 - [x] Add a script for automatically update DNP status
-- [ ] Add a script for automatically update component prices
-- [ ] Add a script for automatically update component datasheets
+- [ ] Add a script for automatically update components price
+- [ ] Add a script for automatically update components datasheet
 
 >[!NOTE]
 >If you have any issue with the script or you think that it could be improved, issues and PR are welcome.
