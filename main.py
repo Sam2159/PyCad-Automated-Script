@@ -1,14 +1,33 @@
 from Set_DNP_To_False_True import *
+from PriceDatasheetUpdater import updatePriceOrDatasheet
 from time import sleep
 
 
 
 def add_upt_options():
-    print('\033c')
+    while True:
+        print('\033c')
 
-    print("--PyCad-Automated-Scripts--\n\n\nComing Soon...")
-    sleep(2)
-    return 0
+        print("--PyCad-Automated-Scripts--\n\n\nChoose an option:\n\n\n[1] Add or update prices.\n\n[2] Add or update datasheet links.\n\n[3] Go back.\n\n> ", end = "")
+
+        choosed_option = input("")
+
+        print('\033c')
+
+        if choosed_option == "1":
+            updatePriceOrDatasheet("price")
+
+        elif choosed_option == "2":
+            updatePriceOrDatasheet("datasheet")
+
+        elif choosed_option == "3":
+            break
+
+        else:
+            print("\n\nThe chosen option is not valid. Please, retry.\n")
+            sleep(2)
+            print('\033c')
+            continue
 
 
 
@@ -35,10 +54,10 @@ def dnp_options():
             set_part_selected_dnp_false_true()
 
         elif choosed_option == "5":
-            main_menu()
+            break
 
         else:
-            print("\n\nThe choosed option is not valid. Please, retry.\n")
+            print("\n\nThe chosen option is not valid. Please, retry.\n")
             sleep(2)
             print('\033c')
             continue
@@ -49,7 +68,7 @@ def main_menu():
     while True:
         print('\033c')
 
-        print("--PyCad-Automated-Scripts--\n\n\nChoose an Option:\n\n\n[1] Set or Remove DNP.\n\n[2] Add or Update prices and datasheet links.\n\n[3] Quit\n\n> ", end = "")
+        print("--PyCad-Automated-Scripts--\n\n\nChoose an Option:\n\n\n[1] Set or Remove DNP.\n\n[2] Add or update prices and datasheet links.\n\n[3] Quit\n\n> ", end = "")
 
         choosed_option = input("")
 
@@ -64,7 +83,7 @@ def main_menu():
             exit()
 
         else:
-            print("\n\nThe choosed option is not valid. Please, retry.\n")
+            print("\n\nThe chosen option is not valid. Please, retry.\n")
             sleep(2)
             continue
 
