@@ -4,7 +4,7 @@ A Python script that can automatically modify KiCad schematic properties.
 # Dependencies
 Before running the script, make sure KiCad and the required Python modules are installed:
 ```
-pip install kicad-skip filedialpy pathlib tk fitz PyMuPDF
+pip3 install kicad-skip filedialpy pathlib tk PyMuPDF requests bs4 tqdm
 ```
 If you are on linux, you also need to run:
 ```
@@ -19,8 +19,12 @@ python3 main.py
 
 # Development Progress:
 - [x] Add a script for automatically update DNP status
-- [ ] Add a script for automatically update components price
-- [ ] Add a script for automatically update components datasheet
+- [x] Add a script for automatically update components price
+- [-] Add a script for automatically update components datasheet
 
 >[!NOTE]
->If you have any issue with the script or you think that it could be improved, issues and PR are welcome.
+>To avoid problems when updating prices or datasheet links in a schematic, make sure that the MPN property exists for each component and that it contains the correct part number.
+(The script will still try to find the part numbers in other properties, but it's not guaranteed to work every time)
+
+>[!NOTE]
+>If you have any problems with the script or think it could be improved, issues and PR are welcome.
