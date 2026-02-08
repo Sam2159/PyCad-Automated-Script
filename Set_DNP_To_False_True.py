@@ -109,7 +109,7 @@ def restore_old_settings():
         no_dir = True
 
         old_settings = (save_txt.read()).split("\n")
-        for schem_file_dir in finded_schem:
+        for schem_file_dir in found_schem:
             schem = skip.Schematic(schem_file_dir)
             if schem_file_dir in old_settings:
                 no_dir = False
@@ -149,7 +149,7 @@ def restore_old_settings():
 
 def set_all_dnp_to_false_true():
 
-    global finded_schem, dir_path
+    global found_schem, dir_path
     
     dir_path = filedialpy.openDir(title = "Choose a Directory")
 
@@ -158,17 +158,17 @@ def set_all_dnp_to_false_true():
         sleep(1)
         return 0
 
-    finded_schem = glob(f"{dir_path}/*.kicad_sch")
+    found_schem = glob(f"{dir_path}/*.kicad_sch")
 
-    if finded_schem:
+    if found_schem:
         while True:
             global true_or_false
             true_or_false = (input("\nPlease, specify if DNP must be set to False [F], True [T] or restored to old settings [R] (if they exist). If you want to go back, insert [C]: ")).lower()
             if true_or_false == "t":
-                choosen_option = True
+                chosen_option = True
                 break
             elif true_or_false == "f":
-                choosen_option = False
+                chosen_option = False
                 break
             elif true_or_false == "r":
                 restore_old_settings()
@@ -178,19 +178,19 @@ def set_all_dnp_to_false_true():
                 sleep(1)
                 return 0
             else:
-                print("\nThe choosen option doesn't exist, retry.\n")
+                print("\nThe chosen option doesn't exist, retry.\n")
 
 
         with open(f"{Path(__file__).parent}/Old_Set.sav", "w") as save_txt:
             save_txt.truncate()
 
-            for schem_file_dir in finded_schem:
+            for schem_file_dir in found_schem:
                 save_txt.write(f"{schem_file_dir}\n") 
                 print(schem_file_dir)
                 schem = skip.Schematic(schem_file_dir)
                 for component in schem.symbol:
                     save_txt.write(f"\n{ component.property.Reference.value }\n{ int(component.dnp.value) }\n\n")
-                    component.dnp.value = choosen_option
+                    component.dnp.value = chosen_option
                 
                 save_txt.write(f"\nT_END_\n\n\n") 
 
@@ -218,23 +218,23 @@ def set_selected_dnp_to_false_true():
             global true_or_false
             true_or_false = (input("\nPlease, specify if DNP must be set to False [F] or True [T]. If you want to go back, insert [C]: ")).lower()
             if true_or_false == "t":
-                choosen_option = True
+                chosen_option = True
                 break
             elif true_or_false == "f":
-                choosen_option = False
+                chosen_option = False
                 break
             elif true_or_false == "c":
                 print("\nAborted.\n")
                 sleep(1)
                 return 0
             else:
-                print("\nThe choosen option doesn't exist, retry.\n")
+                print("\nThe chosen option doesn't exist, retry.\n")
             
         for schem_file in schems_path:
             print(schem_file)
             schem = skip.Schematic(schem_file)
             for component in schem.symbol:
-                component.dnp.value = choosen_option
+                component.dnp.value = chosen_option
 
             schem.write(schem_file)
 
@@ -281,7 +281,7 @@ def windows_file_selector(filter=None,title=None):
 
 def set_all_dnp_to_false_true_except_selected():
 
-    global finded_schem
+    global found_schem
 
     check_sys_name = system()
     
@@ -295,33 +295,33 @@ def set_all_dnp_to_false_true_except_selected():
 
         directory_of_files = Path(files_path[0]).parent
 
-        finded_schem = glob(f"{directory_of_files}/*.kicad_sch")
+        found_schem = glob(f"{directory_of_files}/*.kicad_sch")
 
         for dir_choose in files_path:
-            if dir_choose in finded_schem:
-                finded_schem.remove(dir_choose)
+            if dir_choose in found_schem:
+                found_schem.remove(dir_choose)
 
         while True:
             global true_or_false
             true_or_false = (input(f"\nPlease, specify if DNP must be set to False [F] or True [T]. If you want to go back, insert [C]: ")).lower()
             if true_or_false == "t":
-                choosen_option = True
+                chosen_option = True
                 break
             elif true_or_false == "f":
-                choosen_option = False
+                chosen_option = False
                 break
             elif true_or_false == "c":
                 print("\nAborted.\n")
                 sleep(1)
                 return 0
             else:
-                print("\nThe choosen option doesn't exist, retry.\n")
+                print("\nThe chosen option doesn't exist, retry.\n")
 
-        for schem_file in finded_schem:
+        for schem_file in found_schem:
             print(schem_file)
             schem = skip.Schematic(schem_file)
             for component in schem.symbol:
-                component.dnp.value = choosen_option
+                component.dnp.value = chosen_option
 
             schem.write(schem_file)
 
@@ -336,8 +336,8 @@ def set_all_dnp_to_false_true_except_selected():
 
 def kicad_path_not_found():
     global kicad_path, kicad_cli_path
-    choosen_option = input('\nThe kicad installation folder has not been found. Select the "KiCad" folder manually [S] or, if you want to go back, insert [C]: ').lower()
-    if choosen_option == "s":
+    chosen_option = input('\nThe kicad installation folder has not been found. Select the "KiCad" folder manually [S] or, if you want to go back, insert [C]: ').lower()
+    if chosen_option == "s":
         kicad_path = Path(filedialpy.openDir(title = "Select The KiCad Installation Folder"))
 
         if kicad_path == Path("."):
@@ -355,17 +355,17 @@ def kicad_path_not_found():
                 save_txt.write(str(kicad_cli_path))
 
 
-    elif choosen_option == "c":
+    elif chosen_option == "c":
         print("\nAborted.\n")
         sleep(1)
         return 0
     
     else:
-        print("\nThe choosen option doesn't exist, retry.\n")
+        print("\nThe chosen option doesn't exist, retry.\n")
 
     
 
-#This function set or disable DNP for each symbol in the choosen part of the selected schematic
+#This function set or disable DNP for each symbol in the chosen part of the selected schematic
 
 def set_part_selected_dnp_false_true():
     global kicad_path, kicad_cli_path
@@ -445,17 +445,17 @@ def set_part_selected_dnp_false_true():
                 true_or_false = (input(f"Please, specify if DNP must be set to False [F] or True [T]. If you want to go back, insert [C]: ")).lower()
                 
                 if true_or_false == "t":
-                    choosen_option = True
+                    chosen_option = True
                     break
                 elif true_or_false == "f":
-                    choosen_option = False
+                    chosen_option = False
                     break
                 elif true_or_false == "c":
                     print("\nAborted.\n")
                     sleep(1)
                     return 0
                 else:
-                    print("\nThe choosen option doesn't exist, retry.\n")
+                    print("\nThe chosen option doesn't exist, retry.\n")
 
         else:
             print('\033c')
@@ -465,7 +465,7 @@ def set_part_selected_dnp_false_true():
         
 
         for component in schem.symbol.within_rectangle(x1, y1, x2, y2):
-            component.dnp.value = choosen_option
+            component.dnp.value = chosen_option
 
         schem.write(file_path)
 
@@ -475,4 +475,5 @@ def set_part_selected_dnp_false_true():
     else:
         print("\nNo files have been selected. Please, retry.\n")
         sleep(1)
+
         return 0
